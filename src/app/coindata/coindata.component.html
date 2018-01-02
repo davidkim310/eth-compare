@@ -1,0 +1,21 @@
+
+<div class="dropdown col-xs-4" >
+  <h1>Select Exchanges to Compare</h1>
+  <h2>Compare</h2>
+  <select name="first" id="" class="form-control" [(ngModel)]="firstExchange" (ngModelChange)="onChange1($event)">
+      <option *ngFor="let exchange of exchanges" value="{{exchange}}">{{exchange}}</option>      
+  </select>
+  <h2>to</h2>
+  <select name="second" id="" class="form-control" [(ngModel)]="secondExchange" (ngModelChange)="onChange1($event)">
+      <option *ngFor="let exchange of exchanges" value="{{exchange}}">{{exchange}}</option>      
+  </select>
+</div>
+<div class="col-xs-4">
+  <h1>First exchange</h1>
+  <h3>{{firstExchange}}</h3>
+  <h4>Data: {{message1}}</h4>
+</div>
+<div class="col-xs-4">
+  <h1>Second Exchange</h1>
+  <h3>{{secondExchange}}</h3>
+</div>

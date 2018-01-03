@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CoinService } from '../coin.service';
-import * as io from 'socket.io-client';
 import { UtilitiesService } from 'app/utilities.service';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -11,65 +11,103 @@ import { UtilitiesService } from 'app/utilities.service';
 })
 
 export class CoindataComponent implements OnInit {
-  socket = io("https://streamer.cryptocompare.com/")  
   exchanges = this.CoinService.exchanges.sort();
+  cheaper: any;
   firstExchange: any;
+  firstExchangeData: any = {
+    PRICE: '',
+    LASTUPDATE: null
+  }
   secondExchange: any;
-  message1: any;
-  currentPrice:any = {};
+  secondExchangeData: any = {
+    PRICE: '',
+    LASTUPDATE: null
+  }
+  message1: any = {
+    PRICE: '0',
+    LASTMARKET: "N/A"
+  };
+  currentPrice: any = {};
+  price1: any;
+  price2: any;
 
   constructor(
+    private http: HttpClient,
     private CoinService: CoinService,
     private utilitiesService: UtilitiesService
   ) { }
   ngOnInit() {
+
     this.utilitiesService.buildData();
     this.firstExchange = this.CoinService.exchanges[0];
     this.secondExchange = this.CoinService.exchanges[1];
-    // this.CoinService.socketRecieve('CCCAGG')    
-  }
-  onChange1(exchange) {
-    console.log("changed firstExchange", exchange)
-    this.CoinService.socketRecieve(exchange).subscribe(message=>{
+    this.CoinService.socketReceive().subscribe(message => {
       this.message1 = message;
       var messageType = message.substring(0, message.indexOf("~"));
       var res = {};
       if (messageType == this.utilitiesService.STATIC.TYPE.CURRENTAGG) {
-        console.log('BEFORE', message)
+        // console.log('BEFORE', message)
         res = this.utilitiesService.unpackCurrent(message);
-        console.log(res)
+        // console.log(res)
         this.dataUnpack(res);
       }
-    })    
-}
-  onChange2(exchange) {
+    })
+    this.getExchange1Data(this.CoinService.exchanges[0])
+    this.getExchange2Data(this.CoinService.exchanges[1])
+  }
+  onChange1(exchange) {
     console.log("changed firstExchange", exchange)
-}
-
-dataUnpack(data) {
-  var from = data['FROMSYMBOL'];
-  var to = data['TOSYMBOL'];
-  var fsym = this.utilitiesService.getStaticCurrencySymbol(from);
-  var tsym = this.utilitiesService.getStaticCurrencySymbol(to);
-  var pair = from + to;
-  console.log(data);
-
-  if (!this.currentPrice.hasOwnProperty(pair)) {
-    this.currentPrice[pair] = {};
+    this.getExchange1Data(exchange)
+  }
+  onChange2(exchange) {
+    console.log("changed secondExchange", exchange)
+    this.getExchange2Data(exchange)
+  }
+  getExchange1Data(exchange) {
+    this.http.get('https://min-api.cryptocompare.com/data/generateAvg?fsym=ETH&tsym=USD&e=' + exchange).subscribe(data => {
+      console.log("data from api ex1", exchange, data);
+      this.firstExchangeData = data;
+      // console.log("this.firstExchange.raw", this.fir)
+      this.getCheaperPrice();
+      
+      // if(this.firstExchangeData.Response === "Error"){
+      //   console.log("data does not exist")
+      // }
+    });
+  }
+  getExchange2Data(exchange) {
+    this.http.get('https://min-api.cryptocompare.com/data/generateAvg?fsym=ETH&tsym=USD&e=' + exchange).subscribe(data => {
+      console.log("data from api ex2", data);
+      this.secondExchangeData = data;
+      this.getCheaperPrice()
+    });
+  }
+  getCheaperPrice(){
+    if(this.firstExchangeData.RAW.PRICE > this.secondExchangeData.RAW.PRICE){
+      this.cheaper = this.secondExchangeData.DISPLAY.LASTMARKET;
+    } else{
+      this.cheaper = this.firstExchangeData.DISPLAY.LASTMARKET;
+    }
   }
 
-  for (var key in data) {
-    this.currentPrice[pair][key] = data[key];
-  }
-
-  if (this.currentPrice[pair]['LASTTRADEID']) {
-    this.currentPrice[pair]['LASTTRADEID'] = parseInt(this.currentPrice[pair]['LASTTRADEID']).toFixed(0);
-  }
-  this.currentPrice[pair]['CHANGE24HOUR'] = this.utilitiesService.convertValueToDisplay(tsym, (this.currentPrice[pair]['PRICE'] - this.currentPrice[pair]['OPEN24HOUR']));
-  this.currentPrice[pair]['CHANGE24HOURPCT'] = ((this.currentPrice[pair]['PRICE'] - this.currentPrice[pair]['OPEN24HOUR']) / this.currentPrice[pair]['OPEN24HOUR'] * 100).toFixed(2) + "%";;
-  console.log('FINAL', this.currentPrice[pair], from, tsym, fsym);
-};
-
-
-
+  dataUnpack(data) {
+    var from = data['FROMSYMBOL'];
+    var to = data['TOSYMBOL'];
+    var fsym = this.utilitiesService.getStaticCurrencySymbol(from);
+    var tsym = this.utilitiesService.getStaticCurrencySymbol(to);
+    var pair = from + to;
+    if (!this.currentPrice.hasOwnProperty(pair)) {
+      this.currentPrice[pair] = {};
+    }
+    for (var key in data) {
+      this.currentPrice[pair][key] = data[key];
+    }
+    if (this.currentPrice[pair]['LASTTRADEID']) {
+      this.currentPrice[pair]['LASTTRADEID'] = parseInt(this.currentPrice[pair]['LASTTRADEID']).toFixed(0);
+    }
+    this.currentPrice[pair]['CHANGE24HOUR'] = this.utilitiesService.convertValueToDisplay(tsym, (this.currentPrice[pair]['PRICE'] - this.currentPrice[pair]['OPEN24HOUR']));
+    this.currentPrice[pair]['CHANGE24HOURPCT'] = ((this.currentPrice[pair]['PRICE'] - this.currentPrice[pair]['OPEN24HOUR']) / this.currentPrice[pair]['OPEN24HOUR'] * 100).toFixed(2) + "%";;
+    // console.log('FINAL', this.currentPrice[pair], from, tsym, fsym);
+    this.message1 = this.currentPrice[pair];
+  };
 }

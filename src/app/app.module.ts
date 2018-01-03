@@ -8,6 +8,7 @@ import { HttpModule } from '@angular/http';
 import { NgForm } from '@angular/forms'
 import { FormsModule } from '@angular/forms';
 import { UtilitiesService } from 'app/utilities.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { UtilitiesService } from 'app/utilities.service';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     HttpModule,
     FormsModule
   ],

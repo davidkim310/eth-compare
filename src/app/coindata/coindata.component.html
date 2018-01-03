@@ -1,4 +1,7 @@
-
+<!-- <h4>Data: {{message1 | json}}</h4> -->
+<h3>Current Market Activity</h3>
+<div>ETH - USD = ${{message1.PRICE}} Last Market: {{message1.LASTMARKET}}</div>
+<div></div>
 <div class="dropdown col-xs-4" >
   <h1>Select Exchanges to Compare</h1>
   <h2>Compare</h2>
@@ -6,16 +9,21 @@
       <option *ngFor="let exchange of exchanges" value="{{exchange}}">{{exchange}}</option>      
   </select>
   <h2>to</h2>
-  <select name="second" id="" class="form-control" [(ngModel)]="secondExchange" (ngModelChange)="onChange1($event)">
+  <select name="second" id="" class="form-control" [(ngModel)]="secondExchange" (ngModelChange)="onChange2($event)">
       <option *ngFor="let exchange of exchanges" value="{{exchange}}">{{exchange}}</option>      
   </select>
+  
 </div>
-<div class="col-xs-4">
+<div class="col-xs-4" id="first">
   <h1>First exchange</h1>
   <h3>{{firstExchange}}</h3>
-  <h4>Data: {{message1}}</h4>
+  <div>Last Updated: {{firstExchangeData.DISPLAY.LASTUPDATE }}</div>
+  <div>1 ETH = {{firstExchangeData.DISPLAY.PRICE}}</div>
 </div>
-<div class="col-xs-4">
+<div class="col-xs-4" id="second">
   <h1>Second Exchange</h1>
   <h3>{{secondExchange}}</h3>
+  <div>Last Updated: {{secondExchangeData.DISPLAY.LASTUPDATE}}</div>
+  <div>1 ETH = {{secondExchangeData.DISPLAY.PRICE}}</div>
 </div>
+<div> {{cheaper}} is the cheaper exchange</div>

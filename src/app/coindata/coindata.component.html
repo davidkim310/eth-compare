@@ -1,29 +1,34 @@
-<!-- <h4>Data: {{message1 | json}}</h4> -->
-<h3>Current Market Activity</h3>
-<div>ETH - USD = ${{message1.PRICE}} Last Market: {{message1.LASTMARKET}}</div>
-<div></div>
-<div class="dropdown col-xs-4" >
-  <h1>Select Exchanges to Compare</h1>
-  <h2>Compare</h2>
-  <select name="first" id="" class="form-control" [(ngModel)]="firstExchange" (ngModelChange)="onChange1($event)">
-      <option *ngFor="let exchange of exchanges" value="{{exchange}}">{{exchange}}</option>      
-  </select>
-  <h2>to</h2>
-  <select name="second" id="" class="form-control" [(ngModel)]="secondExchange" (ngModelChange)="onChange2($event)">
-      <option *ngFor="let exchange of exchanges" value="{{exchange}}">{{exchange}}</option>      
-  </select>
-  
+<div class="currentMarket">
+  <strong>Current Market Activity</strong> ETH - USD =
+  <div class="lastPrice">${{message1.PRICE}}</div> Last Market:
+  <div class="lastMarket">{{message1.LASTMARKET}}</div>
 </div>
-<div class="col-xs-4" id="first">
+<div></div>
+<div class="dropdown col-xs-4 well">
+  <h2>Compare ETH on different exchanges</h2>
+  <h3>Compare</h3>
+  <select name="first" id="" class="form-control" [(ngModel)]="firstExchange" (ngModelChange)="onChange1($event)">
+    <option *ngFor="let exchange of exchanges" value="{{exchange}}">{{exchange}}</option>
+  </select>
+  <h3>to</h3>
+  <select name="second" id="" class="form-control" [(ngModel)]="secondExchange" (ngModelChange)="onChange2($event)">
+    <option *ngFor="let exchange of exchanges" value="{{exchange}}">{{exchange}}</option>
+  </select>
+
+</div>
+<div class="col-xs-4 well" id="first">
   <h1>First exchange</h1>
   <h3>{{firstExchange}}</h3>
   <div>Last Updated: {{firstExchangeData.DISPLAY.LASTUPDATE }}</div>
   <div>1 ETH = {{firstExchangeData.DISPLAY.PRICE}}</div>
+  <div>24 Hour Trade Volume = {{firstExchangeData.DISPLAY.VOLUME24HOUR}}</div>
 </div>
-<div class="col-xs-4" id="second">
+<div class="col-xs-4 well" id="second">
   <h1>Second Exchange</h1>
   <h3>{{secondExchange}}</h3>
   <div>Last Updated: {{secondExchangeData.DISPLAY.LASTUPDATE}}</div>
   <div>1 ETH = {{secondExchangeData.DISPLAY.PRICE}}</div>
+  <div>24 Hour Trade Volume = {{secondExchangeData.DISPLAY.VOLUME24HOUR}}</div>  
 </div>
-<div> {{cheaper}} is the cheaper exchange</div>
+<div class="cheaper"> {{cheaper}} is the cheaper exchange</div>
+<div class="cheaper">{{volume}} has had more trade volume in the last 24 hours</div>

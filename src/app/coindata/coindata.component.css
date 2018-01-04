@@ -1,9 +1,37 @@
+.cheaper {
+    font-size: 1.2vw;
+    font-weight: bold;
+    text-align: center;
+}
+.currentMarket {
+    padding-left: 1vw;
+    padding-top:1vw;
+    padding-bottom: 1vw;
+    background-color: #727A82;
+    color: white;
+}
 .dropdown {
     float: left;
+    margin-top: 1vw;
+    margin-left: 1vw;
+}
+.lastPrice {
+    color: black;
+    font-weight: bold;
+}
+.lastMarket {
+    color: black;
+    font-weight: bold;
 }
 #first {
     border: 1px solid black;
+    width: 30vw;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    margin-top: 1vw;
 }
 #second {
     border: 1px solid blue;
+    width: 30vw;
+    margin-top: 1vw;
 }

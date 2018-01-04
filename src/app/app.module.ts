@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppComponent } from './app.component';
 import { CoindataComponent } from './coindata/coindata.component';
 import { CoinService } from 'app/coin.service';

@@ -25,7 +25,7 @@ export class UtilitiesService {
           }
           else if(maskInt&this.CURRENT.FIELDS[property])
           {
-        //i know this is a hack, for cccagg, future code please don't hate me:(, i did this to avoid
+        //i know this is a hack, for cccagg, i did this to avoid
         //subscribing to trades as well in order to show the last market
              if(property === 'LASTMARKET'){
                   unpackedCurrent[property] = valuesArray[currentField];

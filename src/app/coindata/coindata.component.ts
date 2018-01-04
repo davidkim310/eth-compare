@@ -13,6 +13,7 @@ import { HttpClient } from '@angular/common/http';
 export class CoindataComponent implements OnInit {
   exchanges = this.CoinService.exchanges.sort();
   cheaper: any;
+  volume: any;
   firstExchange: any;
   firstExchangeData: any = {
     PRICE: '',
@@ -67,12 +68,8 @@ export class CoindataComponent implements OnInit {
     this.http.get('https://min-api.cryptocompare.com/data/generateAvg?fsym=ETH&tsym=USD&e=' + exchange).subscribe(data => {
       console.log("data from api ex1", exchange, data);
       this.firstExchangeData = data;
-      // console.log("this.firstExchange.raw", this.fir)
       this.getCheaperPrice();
-      
-      // if(this.firstExchangeData.Response === "Error"){
-      //   console.log("data does not exist")
-      // }
+      this.getTradeVolume()
     });
   }
   getExchange2Data(exchange) {
@@ -80,6 +77,7 @@ export class CoindataComponent implements OnInit {
       console.log("data from api ex2", data);
       this.secondExchangeData = data;
       this.getCheaperPrice()
+      this.getTradeVolume()
     });
   }
   getCheaperPrice(){
@@ -87,6 +85,13 @@ export class CoindataComponent implements OnInit {
       this.cheaper = this.secondExchangeData.DISPLAY.LASTMARKET;
     } else{
       this.cheaper = this.firstExchangeData.DISPLAY.LASTMARKET;
+    }
+  }
+  getTradeVolume(){
+    if(this.firstExchangeData.RAW.VOLUME24HOUR < this.secondExchangeData.RAW.VOLUME24HOUR){
+      this.volume = this.secondExchangeData.DISPLAY.LASTMARKET;
+    } else{
+      this.volume = this.firstExchangeData.DISPLAY.LASTMARKET;
     }
   }
 

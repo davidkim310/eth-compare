@@ -57,16 +57,16 @@ export class CoindataComponent implements OnInit {
     this.getExchange2Data(this.CoinService.exchanges[1])
   }
   onChange1(exchange) {
-    console.log("changed firstExchange", exchange)
+    // console.log("changed firstExchange", exchange)
     this.getExchange1Data(exchange)
   }
   onChange2(exchange) {
-    console.log("changed secondExchange", exchange)
+    // console.log("changed secondExchange", exchange)
     this.getExchange2Data(exchange)
   }
   getExchange1Data(exchange) {
     this.http.get('https://min-api.cryptocompare.com/data/generateAvg?fsym=ETH&tsym=USD&e=' + exchange).subscribe(data => {
-      console.log("data from api ex1", exchange, data);
+      // console.log("data from api ex1", exchange, data);
       this.firstExchangeData = data;
       this.getCheaperPrice();
       this.getTradeVolume()
@@ -80,17 +80,17 @@ export class CoindataComponent implements OnInit {
       this.getTradeVolume()
     });
   }
-  getCheaperPrice(){
-    if(this.firstExchangeData.RAW.PRICE > this.secondExchangeData.RAW.PRICE){
+  getCheaperPrice() {
+    if (this.firstExchangeData.RAW.PRICE > this.secondExchangeData.RAW.PRICE) {
       this.cheaper = this.secondExchangeData.DISPLAY.LASTMARKET;
-    } else{
+    } else {
       this.cheaper = this.firstExchangeData.DISPLAY.LASTMARKET;
     }
   }
-  getTradeVolume(){
-    if(this.firstExchangeData.RAW.VOLUME24HOUR < this.secondExchangeData.RAW.VOLUME24HOUR){
+  getTradeVolume() {
+    if (this.firstExchangeData.RAW.VOLUME24HOUR < this.secondExchangeData.RAW.VOLUME24HOUR) {
       this.volume = this.secondExchangeData.DISPLAY.LASTMARKET;
-    } else{
+    } else {
       this.volume = this.firstExchangeData.DISPLAY.LASTMARKET;
     }
   }

@@ -3,7 +3,11 @@
     font-weight: bold;
     text-align: center;
 }
+.compareHead {
+    text-align: center;
+}
 .currentMarket {
+    font-size: 1vw;
     padding-left: 1vw;
     padding-top:1vw;
     padding-bottom: 1vw;
@@ -23,15 +27,27 @@
     color: black;
     font-weight: bold;
 }
-#first {
+.results {
+    width: 38vw;
+    margin-left: 45vw;
+    margin-top: 16vw;
+    border: 2px solid green;
+}
+#drop1 {
     border: 1px solid black;
-    width: 30vw;
+}
+#drop2 {
+    border: 1px solid blue;    
+}
+#first {
+    border: 2px solid black;
+    width: 25vw;
     margin-left: 1vw;
     margin-right: 1vw;
     margin-top: 1vw;
 }
 #second {
-    border: 1px solid blue;
-    width: 30vw;
+    border: 2px solid blue;
+    width: 25vw;
     margin-top: 1vw;
 }

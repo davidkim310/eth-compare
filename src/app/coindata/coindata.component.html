@@ -1,36 +1,40 @@
-<div class="currentMarket">
-  <strong>Current Market Activity</strong> ETH - USD =
-  <div class="lastPrice">${{message1.PRICE}}</div> Last Market:
-  <div class="lastMarket">{{message1.LASTMARKET}}</div>
-</div>
-<div></div>
-<div class="dropdown col-xs-4 well">
-  <h2 class="compareHead">Compare ETH on different exchanges</h2>
-  <h3>Compare</h3>
-  <select name="first" id="drop1" class="form-control" [(ngModel)]="firstExchange" (ngModelChange)="onChange1($event)">
-    <option *ngFor="let exchange of exchanges" value="{{exchange}}">{{exchange}}</option>
-  </select>
-  <h3>to</h3>
-  <select name="second" id="drop2" class="form-control" [(ngModel)]="secondExchange" (ngModelChange)="onChange2($event)">
-    <option *ngFor="let exchange of exchanges" value="{{exchange}}">{{exchange}}</option>
-  </select>
-
-</div>
-<div class="col-xs-4 well" id="first">
-  <h2 class="compareHead">First exchange</h2>
-  <h3>{{firstExchange}}</h3>
-  <div>Last Updated: {{firstExchangeData.DISPLAY.LASTUPDATE }}</div>
-  <div>1 ETH = {{firstExchangeData.DISPLAY.PRICE}}</div>
-  <div>24 Hour Trade Volume = {{firstExchangeData.DISPLAY.VOLUME24HOUR}}</div>
-</div>
-<div class="col-xs-4 well" id="second">
-  <h2 class="compareHead">Second Exchange</h2>
-  <h3>{{secondExchange}}</h3>
-  <div>Last Updated: {{secondExchangeData.DISPLAY.LASTUPDATE}}</div>
-  <div>1 ETH = {{secondExchangeData.DISPLAY.PRICE}}</div>
-  <div>24 Hour Trade Volume = {{secondExchangeData.DISPLAY.VOLUME24HOUR}}</div>
-</div>
-<div class="well results">
-  <div class="cheaper">{{cheaper}} is the cheaper exchange.</div>
-  <div class="cheaper">{{volume}} has had more trade volume in the last 24 hours.</div>
+<!-- <div [ngBusy]="{busy: getExchange1Subscriptions, message:'Fetching...'}"></div>
+<div [ngBusy]="{busy: getExchange2Subscriptions, message:'Fetching...'}"></div> -->
+<div class="container-fluid">
+	<div class="currentMarket">
+		<strong>Current Market Activity</strong> ETH - USD =
+		<div class="lastPrice">${{message1.PRICE}}</div> Last Market:
+		<div class="lastMarket">{{message1.LASTMARKET}}</div>
+	</div>
+	<div class="dropdown col-xs-4 well">
+		<h2 class="compareHead">Compare ETH on different exchanges</h2>
+		<h3>Compare</h3>
+		<select name="first" id="drop1" class="form-control" [(ngModel)]="firstExchange" (ngModelChange)="onChange1($event)">
+			<option *ngFor="let exchange of exchanges" value="{{exchange}}">{{exchange}}</option>
+		</select>
+		<h3>to</h3>
+		<select name="second" id="drop2" class="form-control" [(ngModel)]="secondExchange" (ngModelChange)="onChange2($event)">
+			<option *ngFor="let exchange of exchanges" value="{{exchange}}">{{exchange}}</option>
+		</select>
+	</div>
+	<div class="col-xs-4 well" id="first">
+		<div [ngBusy]="getExchange1Subscriptions"></div>
+		<h2 class="compareHead">First exchange</h2>
+		<h3>{{firstExchange}}</h3>
+		<div>Last Updated: {{firstExchangeData.DISPLAY.LASTUPDATE }}</div>
+		<div>1 ETH = {{firstExchangeData.DISPLAY.PRICE}}</div>
+		<div>24 Hour Trade Volume = {{firstExchangeData.DISPLAY.VOLUME24HOUR}}</div>
+	</div>
+	<div class="col-xs-4 well" id="second">
+		<div [ngBusy]="getExchange2Subscriptions"></div>
+		<h2 class="compareHead">Second Exchange</h2>
+		<h3>{{secondExchange}}</h3>
+		<div>Last Updated: {{secondExchangeData.DISPLAY.LASTUPDATE}}</div>
+		<div>1 ETH = {{secondExchangeData.DISPLAY.PRICE}}</div>
+		<div>24 Hour Trade Volume = {{secondExchangeData.DISPLAY.VOLUME24HOUR}}</div>
+	</div>
+	<div class="well results">
+		<div class="cheaper">{{cheaper}} is the cheaper exchange.</div>
+		<div class="cheaper">{{volume}} has had more trade volume in the last 24 hours.</div>
+	</div>
 </div>

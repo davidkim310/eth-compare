@@ -1,9 +1,8 @@
-<!-- <div [ngBusy]="{busy: getExchange1Subscriptions, message:'Fetching...'}"></div>
-<div [ngBusy]="{busy: getExchange2Subscriptions, message:'Fetching...'}"></div> -->
+
 <div class="container-fluid">
 	<div class="currentMarket">
 		<strong>Current Market Activity</strong> ETH - USD =
-		<div class="lastPrice">${{message1.PRICE}}</div> Last Market:
+		<div class="lastPrice">USD {{message1.PRICE}}</div> Last Market:
 		<div class="lastMarket">{{message1.LASTMARKET}}</div>
 	</div>
 	<div class="dropdown col-xs-4 well">

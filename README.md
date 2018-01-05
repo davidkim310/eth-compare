@@ -6,5 +6,5 @@ CryptoCompare - https://www.cryptocompare.com/api/
 ### Getting Started:
 All data is sent and received as JSON.
 
-- Run 'npm install'
-- Run 'npm start'.
+- Run 'docker-compose up serve'
+- On your browser go to 'http://localhost:4200/'.

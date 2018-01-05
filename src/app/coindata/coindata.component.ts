@@ -22,8 +22,8 @@ export class CoindataComponent implements OnInit {
   secondExchangeData: any = {};
   secondExchange: any;
   message1: any = {
-    PRICE: '0',
-    LASTMARKET: 'N/A'
+    PRICE: 'Socket Offline',
+    LASTMARKET: 'Socket Offline'
   };
   currentPrice: any = {};
   price1: any;
